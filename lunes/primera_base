@@ -1,0 +1,111 @@
+CodeaCamp05s-Mac-mini:lunes codea_mac_05$ sqlite3
+-- Loading resources from /Users/codea_mac_05/.sqliterc
+
+SQLite version 3.8.5 2014-08-15 22:37:57
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite> CREATE TABLE usuarios (
+   ...>   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   ...>   nombre VARCHAR(64) NOT NULL,
+   ...>   apellido  VARCHAR(64) NOT NULL,
+   ...>   email VARCHAR(128) UNIQUE NOT NULL,
+   ...>   fecha_nacimiento DATETIME NOT NULL,
+   ...>   genero VARCHAR(10) NOT NULL
+   ...> );
+sqlite> SELECT * FROM usuarios;
+sqlite> INSERT INTO usuarios
+   ...>  (nombre, apellido, email, fecha_nacimiento, genero)
+   ...>  VALUES
+   ...>  ('Carlos', 'Ribero', 'carlos@yahoo.com', '1970-11-03', 'masculino');
+sqlite> SELECT * FROM usuarios;
+id          nombre      apellido    email             fecha_nacimiento  genero    
+----------  ----------  ----------  ----------------  ----------------  ----------
+1           Carlos      Ribero      carlos@yahoo.com  1970-11-03        masculino 
+sqlite> INSERT INTO usuarios
+   ...>  (nombre, apellido, email, fecha_nacimiento, genero)
+   ...>  VALUES
+   ...>  ('Xochitl', 'Tufiño', 'xochitl@yahoo.com', '1990-11-03', 'femenino');
+sqlite> SELECT * FROM usuarios;
+id          nombre      apellido    email             fecha_nacimiento  genero    
+----------  ----------  ----------  ----------------  ----------------  ----------
+1           Carlos      Ribero      carlos@yahoo.com  1970-11-03        masculino 
+2           Xochitl     Tufiño     xochitl@yahoo.co  1990-11-03        femenino  
+sqlite> sqlite> sqlite> ALTER TABLE usuarios ADD COLUMN apodo VARCHAR(64) NOT NULL
+   ...> 
+   ...> ;
+Error: near "sqlite": syntax error
+sqlite> sqlite> ALTER TABLE usuarios ADD COLUMN apodo VARCHAR(64) NOT NULL;
+Error: near "sqlite": syntax error
+sqlite> ALTER TABLE usuarios ADD COLUMN apodo VARCHAR(64) NOT NULL;
+Error: Cannot add a NOT NULL column with default value NULL
+sqlite> ALTER TABLE usuarios ADD COLUMN apodo VARCHAR(64);
+sqlite> SELECT * FROM usuarios;
+id          nombre      apellido    email             fecha_nacimiento  genero      apodo     
+----------  ----------  ----------  ----------------  ----------------  ----------  ----------
+1           Carlos      Ribero      carlos@yahoo.com  1970-11-03        masculino             
+2           Xochitl     Tufiño     xochitl@yahoo.co  1990-11-03        femenino              
+sqlite> .schema
+CREATE TABLE usuarios (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nombre VARCHAR(64) NOT NULL,
+  apellido  VARCHAR(64) NOT NULL,
+  email VARCHAR(128) UNIQUE NOT NULL,
+  fecha_nacimiento DATETIME NOT NULL,
+  genero VARCHAR(10) NOT NULL
+, apodo VARCHAR(64));
+sqlite> UPDATE usuarios SET apodo = Charly WHERE ID = 1
+   ...> SELECT * FROM usuarios;
+Error: near "SELECT": syntax error
+sqlite> ;
+sqlite> SELECT * FROM usuarios;
+id          nombre      apellido    email             fecha_nacimiento  genero      apodo     
+----------  ----------  ----------  ----------------  ----------------  ----------  ----------
+1           Carlos      Ribero      carlos@yahoo.com  1970-11-03        masculino             
+2           Xochitl     Tufiño     xochitl@yahoo.co  1990-11-03        femenino              
+sqlite> UPDATE usuarios SET apodo = Charly WHERE ID = 1;
+Error: no such column: Charly
+sqlite> SELECT * FROM usuarios;
+id          nombre      apellido    email             fecha_nacimiento  genero      apodo     
+----------  ----------  ----------  ----------------  ----------------  ----------  ----------
+1           Carlos      Ribero      carlos@yahoo.com  1970-11-03        masculino             
+2           Xochitl     Tufiño     xochitl@yahoo.co  1990-11-03        femenino              
+sqlite> UPDATE usuarios SET apodo = 'Charly' WHERE ID = 1;
+sqlite> SELECT * FROM usuarios;
+id          nombre      apellido    email             fecha_nacimiento  genero      apodo     
+----------  ----------  ----------  ----------------  ----------------  ----------  ----------
+1           Carlos      Ribero      carlos@yahoo.com  1970-11-03        masculino   Charly    
+2           Xochitl     Tufiño     xochitl@yahoo.co  1990-11-03        femenino              
+sqlite> UPDATE usuarios SET apodo = 'Xoch' WHERE ID = 2;
+sqlite> SELECT * FROM usuarios;
+id          nombre      apellido    email             fecha_nacimiento  genero      apodo     
+----------  ----------  ----------  ----------------  ----------------  ----------  ----------
+1           Carlos      Ribero      carlos@yahoo.com  1970-11-03        masculino   Charly    
+2           Xochitl     Tufiño     xochitl@yahoo.co  1990-11-03        femenino    Xoch      
+sqlite> UPDATE usuarios SET apellido = 'Rivero' fecha_nacimiento = 1980-11-03  WHERE ID = 1
+   ...> ;
+Error: near "fecha_nacimiento": syntax error
+sqlite> UPDATE usuarios SET apellido = 'Rivero', fecha_nacimiento = 1980-11-03  WHERE ID = 1; 
+sqlite> SELECT * FROM usuarios;
+id          nombre      apellido    email             fecha_nacimiento  genero      apodo     
+----------  ----------  ----------  ----------------  ----------------  ----------  ----------
+1           Carlos      Rivero      carlos@yahoo.com  1966              masculino   Charly    
+2           Xochitl     Tufiño     xochitl@yahoo.co  1990-11-03        femenino    Xoch      
+sqlite> UPDATE usuarios SET apellido = 'Rivero', fecha_nacimiento = 1980  WHERE ID = 1; 
+sqlite> SELECT * FROM usuarios;
+id          nombre      apellido    email             fecha_nacimiento  genero      apodo     
+----------  ----------  ----------  ----------------  ----------------  ----------  ----------
+1           Carlos      Rivero      carlos@yahoo.com  1980              masculino   Charly    
+2           Xochitl     Tufiño     xochitl@yahoo.co  1990-11-03        femenino    Xoch      
+sqlite> UPDATE usuarios SET fecha_nacimiento = 1980-11-03  WHERE ID = 1; 
+sqlite> SELECT * FROM usuarios;
+id          nombre      apellido    email             fecha_nacimiento  genero      apodo     
+----------  ----------  ----------  ----------------  ----------------  ----------  ----------
+1           Carlos      Rivero      carlos@yahoo.com  1966              masculino   Charly    
+2           Xochitl     Tufiño     xochitl@yahoo.co  1990-11-03        femenino    Xoch      
+sqlite> UPDATE usuarios SET apellido = 'Rivero', fecha_nacimiento = '1980-11-03'  WHERE ID = 1;
+sqlite> SELECT * FROM usuarios;                                                              id          nombre      apellido    email             fecha_nacimiento  genero      apodo     
+----------  ----------  ----------  ----------------  ----------------  ----------  ----------
+1           Carlos      Rivero      carlos@yahoo.com  1980-11-03        masculino   Charly    
+2           Xochitl     Tufiño     xochitl@yahoo.co  1990-11-03        femenino    Xoch      
+sqlite> 
